@@ -4,5 +4,9 @@ try:
 except ImportError:
     pass
 
-from .seasons import sub
-[ [ c.all() for c in b ] for b in [a.sub() for a in sub()] ]
+def main():
+    from .seasons import sub
+    [ [ c.all() for c in b ] for b in [a.sub() for a in sub()] ]
+
+if __name__ == "__main__":
+    main()

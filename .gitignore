@@ -2,3 +2,6 @@ Results/
 __pycache__/
 *.pyc
 cache.sqlite
+
+dist/
+*.egg-info/

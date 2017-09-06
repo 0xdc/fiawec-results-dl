@@ -7,5 +7,9 @@ scrapes the HTML forms via BeautifulSoup and downloads the provided files.
 
 Quickstart
 ----
-> $ pip install -r requirements.txt
+> $ pip install -i https://github.com/0xdc/fiawec-results-dl  
+> $ fiawec-results-dl
+
+or
+> $ pip install -r requirements.txt  
 > $ python -mfiawec
