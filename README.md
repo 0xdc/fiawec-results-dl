@@ -8,7 +8,7 @@ BeautifulSoup and downloads the provided files.
 
 Quickstart
 ----
-> $ pip install -i https://github.com/0xdc/fiawec-results-dl  
+> $ pip install -e git+https://github.com/0xdc/fiawec-results-dl  
 > $ fiawec-results-dl
 
 or
