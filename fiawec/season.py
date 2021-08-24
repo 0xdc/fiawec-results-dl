@@ -6,7 +6,7 @@ import requests
 from .event import Event
 
 class Season():
-    url = "http://fiawec.alkamelsystems.com/top.php?season={season}"
+    url = "http://fiawec.alkamelsystems.com/index.php?season={season}"
 
     def __init__(self, season):
         self.season = season
@@ -26,7 +26,7 @@ class Season():
             response = self.pull()
 
         soup = BS(response.text, "html.parser")
-        self.events = soup.find("select", class_="champSelect").find_all("option")
+        self.events = soup.find("select", attrs={"name": "evvent"}).find_all("option")
 
         #return [ x.get("value") for x in options ]
         return self.events

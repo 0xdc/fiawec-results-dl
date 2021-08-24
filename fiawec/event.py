@@ -6,7 +6,7 @@ import os
 import urllib
 
 class Event():
-    url = "http://fiawec.alkamelsystems.com/tree.php?season={season}&event={event}"
+    url = "http://fiawec.alkamelsystems.com/index.php?season={season}&evvent={event}"
 
     def __init__(self, event, season):
         self.event = event
@@ -27,7 +27,8 @@ class Event():
             response = self.pull()
 
         soup = BS(response.text, "html.parser")
-        self.results = soup.find_all("a", target="mainFrame")
+        events = soup.find("div", id="resultsTree")
+        self.results = events.find_all("a")
 
         #return [ x.get("value") for x in objects ]
         return self.results
@@ -37,7 +38,10 @@ class Event():
             results = self.event_results()
 
         for result in results:
-            href = urllib.parse.unquote(result.get("href"))
+            try:
+                href = urllib.parse.unquote(result.get("href"))
+            except TypeError:
+                continue
             basename = os.path.basename(href)
             dirname = os.path.dirname(href)
             try:
