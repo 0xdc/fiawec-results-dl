@@ -1,6 +1,6 @@
 name: pip install
 
-on: [ push, worker_dispatch ]
+on: [ push, workflow_dispatch ]
 
 jobs:
   build:
