@@ -57,3 +57,15 @@ class Event():
                     with open(href, "wb") as f:
                         for chunk in r:
                             f.write(chunk)
+
+class NBEvent(Event):
+    url = "http://fiawec.alkamelsystems.com/noticeBoard.php?season={season}&evvent={event}"
+
+class Committee(Event):
+    url = "http://fiawec.alkamelsystems.com/committe.php?season={season}"
+
+    def __init__(self, season):
+        self.season = season
+        self.event = "committee"
+
+        self.url = self.url.format(season=season)

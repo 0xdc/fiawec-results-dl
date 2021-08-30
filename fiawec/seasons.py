@@ -4,20 +4,31 @@ from bs4 import BeautifulSoup as BS
 import requests
 import requests_cache
 
-from .season import Season
+from .season import Season, NoticeBoard as NBEvent
+from .event import Committee as CommitteeEv
 
-def get_seasons():
-    url = "http://fiawec.alkamelsystems.com/index.php"
+class TopLevel():
+    url = "http://fiawec.alkamelsystems.com/"
 
-    top = requests.get(url)
-    soup = BS(top.text, "html.parser")
+    def __init__(self, page, cls):
+        self.url = self.url + page
+        self.cls = cls
 
-    options = soup.find("select", attrs={"name": "season"}).find_all("option")
+    def get_seasons(self):
+        top = requests.get(self.url)
+        soup = BS(top.text, "html.parser")
 
-    return [ x.get("value") for x in options ]
+        options = soup.find("select", attrs={"name": "season"}).find_all("option")
 
-def sub(seasons=None):
-    if seasons is None:
-        seasons = get_seasons()
+        return [ x.get("value") for x in options ]
 
-    return [ Season(x) for x in seasons ]
+    def sub(self, seasons=None):
+        if seasons is None:
+            seasons = self.get_seasons()
+
+        return [ self.cls(x) for x in seasons ]
+
+
+Seasons = TopLevel("index.php", Season)
+NoticeBoard = TopLevel("noticeBoard.php", NBEvent)
+Committee = TopLevel("committe.php", CommitteeEv)

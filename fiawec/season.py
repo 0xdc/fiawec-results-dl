@@ -3,7 +3,7 @@
 from bs4 import BeautifulSoup as BS
 import requests
 
-from .event import Event
+from .event import Event, NBEvent
 
 class Season():
     url = "http://fiawec.alkamelsystems.com/index.php?season={season}"
@@ -36,3 +36,12 @@ class Season():
             events = self.events()
 
         return [ Event( x.get("value"), self ) for x in events ]
+
+class NoticeBoard(Season):
+    url = "http://fiawec.alkamelsystems.com/noticeBoard.php?season={season}"
+
+    def sub(self, events=None):
+        if events is None:
+            events = self.events()
+
+        return [ NBEvent( x.get("value"), self) for x in events ]
