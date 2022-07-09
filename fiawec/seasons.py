@@ -15,7 +15,8 @@ class TopLevel():
         self.cls = cls
 
     def get_seasons(self):
-        top = requests.get(self.url)
+        with requests_cache.disabled():
+            top = requests.get(self.url)
         soup = BS(top.text, "html.parser")
 
         options = soup.find("select", attrs={"name": "season"}).find_all("option")

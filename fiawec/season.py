@@ -2,6 +2,7 @@
 
 from bs4 import BeautifulSoup as BS
 import requests
+import requests_cache
 
 from .event import Event, NBEvent
 
@@ -18,7 +19,8 @@ class Season():
 
     def pull(self):
         if not hasattr(self, "cache"):
-            self.cache = requests.get(self.url)
+            with requests_cache.disabled():
+                self.cache = requests.get(self.url)
         return self.cache
 
     def events(self, response=None):

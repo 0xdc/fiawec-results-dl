@@ -2,6 +2,7 @@
 
 from bs4 import BeautifulSoup as BS
 import requests
+import requests_cache
 import os
 import urllib
 
@@ -19,7 +20,8 @@ class Event():
 
     def pull(self):
         if not hasattr(self, "cache"):
-            self.cache = requests.get(self.url)
+            with requests_cache.disabled():
+                self.cache = requests.get(self.url)
         return self.cache
 
     def event_results(self, response=None):
@@ -52,7 +54,8 @@ class Event():
             print(self, basename)
             if not os.path.exists(href):
                 url = "http://fiawec.alkamelsystems.com/{}".format(result.get("href"))
-                r = requests.get(url, stream=True)
+                with requests_cache.enabled():
+                    r = requests.get(url, stream=True)
                 if r.status_code == 200:
                     with open(href, "wb") as f:
                         for chunk in r:
